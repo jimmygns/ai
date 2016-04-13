@@ -40,7 +40,7 @@ def getPossibleActions(currentPrime):
 	return result
 
 def getDistance(current,final):
-	return abs(current-final)
+	return abs(int(current)-int(final))
 
 
 
