@@ -66,11 +66,13 @@ def getPath(startingPrime, finalPrime):
 
 
 def main():
-        primes=str(sys.stdin.readline()).split()
-        if len(primes)==1:
-        	print(primes[0])
-        else:
-        	print(getPath(primes[0],primes[1]))
+        for line in sys.stdin:
+		primes=str(line).split()
+		if len(primes)==1:
+			print(primes[0])
+		else:
+			print(getPath(primes[0],primes[1]))
+		
 
 if __name__ == '__main__' :
         main()
