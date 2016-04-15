@@ -79,6 +79,7 @@ def main():
             print("invalid input!")
         print ('The script took {0} second !'.format(time.time() - startTime))
 
+
 if __name__ == '__main__' :
         main()
 
