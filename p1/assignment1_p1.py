@@ -2,28 +2,34 @@ __author__='jix029@ucsd.edu,A99076165,jih089@ucsd.edu,A99037641,z6hu@ucsd.edu,A9
 
 from sets import Set
 import sys
+import time
 explored=Set() 
+startTime = time.time()
 
 
 def isPrime(num):
-	number=int(num)
-	for i in range(2,number):
-		if number%i == 0:
-			return False
-	return True
+    number=int(num)
+    if number>2 and number%2==0:
+        return False
+    for i in range(3,number,2):
+        if number%i == 0:
+            return False
+    return True
+
 
 def getPossibleActions(currentPrime):
-	result=[]
-	current=currentPrime
-	for index in range(len(current)):
-		current=currentPrime
-		for i in range(10):
-			s=list(current)
-			s[index]=str(i)
-			newString=''.join(s)
-			if(newString!=currentPrime and isPrime(newString) and newString[0]!='0' and newString not in explored):
-				result.append(newString)
-        return result
+    result=[]
+    s=list(currentPrime)
+    for index in range(len(s)):
+        c=s[index]
+        for i in range(10):
+            s[index]=str(i)
+            newString=''.join(s)
+            if newString not in explored:
+                if(newString[0]!='0' and isPrime(newString)):
+                    result.append(newString)
+        s[index]=c
+    return result
 
 def getPath(startingPrime, finalPrime):
 	if startingPrime==finalPrime:
@@ -43,11 +49,15 @@ def getPath(startingPrime, finalPrime):
 
 
 def main():
-        primes=str(sys.stdin.readline()).split()
+    for line in sys.stdin:
+        primes=str(line).split()
         if len(primes)==1:
-        	print(primes[0])
+            print(primes[0])
+        elif len(primes)==2 and isPrime(primes[0]) and isPrime(primes[1]):
+            print(getPath(primes[0],primes[1]))
         else:
-        	print(getPath(primes[0],primes[1]))
+            print("invalid input!")
+        print ('The script took {0} second !'.format(time.time() - startTime))
 
 if __name__ == '__main__' :
         main()

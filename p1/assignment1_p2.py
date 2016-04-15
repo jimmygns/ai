@@ -1,7 +1,10 @@
+__author__='jix029@ucsd.edu,A99076165,jih089@ucsd.edu,A99037641,z6hu@ucsd.edu,A99056145'
 from sets import Set
 import sys
-explored=Set()
+import time
 
+explored=Set()
+startTime = time.time()
 
 def isPrime(num):
     number=int(num)
@@ -26,14 +29,15 @@ def getPossibleActions(currentPrime):
 def getPath(startingPrime, finalPrime,explored, depth):
     if startingPrime==finalPrime:
         return finalPrime
-    if depth>5:
+    if depth>=5:
         return 'failure'
     for neighbor in getPossibleActions(startingPrime):
         if neighbor in explored:
            continue
         explored.add(neighbor)
-        #print (neighbor+' '+str(depth))
+        #print (neighbor+' '+str(depth+1))
         result=getPath(neighbor,finalPrime,explored,depth+1)
+        explored.remove(neighbor)
         if result=='failure':
             continue
         else:
@@ -45,8 +49,11 @@ def getPath(startingPrime, finalPrime,explored, depth):
 
 
 def main():
-    primes=str(sys.stdin.readline()).split()
-    print(getPath(primes[0],primes[1],{primes[0]},0))
+    for line in sys.stdin:
+        primes=str(line).split()
+        print(getPath(primes[0],primes[1],{primes[0]},0))
+        print ('The script took {0} second !'.format(time.time() - startTime))
+
 
 if __name__ == '__main__' :
     main()
