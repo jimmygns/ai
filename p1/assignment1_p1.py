@@ -1,3 +1,5 @@
+__author__='jix029@ucsd.edu,A99076165,jih089@ucsd.edu,A99037641,z6hu@ucsd.edu,A99056145'
+
 from sets import Set
 import sys
 explored=Set() 
@@ -16,14 +18,16 @@ def getPossibleActions(currentPrime):
 	for index in range(len(current)):
 		current=currentPrime
 		for i in range(10):
-                        s=list(current)
+			s=list(current)
 			s[index]=str(i)
-                        newString=''.join(s)
+			newString=''.join(s)
 			if(newString!=currentPrime and isPrime(newString) and newString[0]!='0' and newString not in explored):
 				result.append(newString)
         return result
 
 def getPath(startingPrime, finalPrime):
+	if startingPrime==finalPrime:
+		return startingPrime
 	queue = [(startingPrime,startingPrime)]
 	while queue:
 		(v,p) = queue.pop(0)
@@ -40,7 +44,10 @@ def getPath(startingPrime, finalPrime):
 
 def main():
         primes=str(sys.stdin.readline()).split()
-        print(getPath(primes[0],primes[1]))
+        if len(primes)==1:
+        	print(primes[0])
+        else:
+        	print(getPath(primes[0],primes[1]))
 
 if __name__ == '__main__' :
         main()

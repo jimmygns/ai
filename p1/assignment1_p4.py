@@ -1,3 +1,5 @@
+__author__='jix029@ucsd.edu,A99076165,jih089@ucsd.edu,A99037641,z6hu@ucsd.edu,A99056145'
+
 from sets import Set
 import sys
 
@@ -24,6 +26,8 @@ def getPossibleActions(currentPrime):
 	return result
 
 def getPath(startingPrime, finalPrime):
+	if startingPrime==finalPrime:
+		return startingPrime
 	queueF = [(startingPrime,startingPrime)]
 	dicF = {startingPrime:startingPrime}
 	exploredF = Set()
@@ -63,7 +67,10 @@ def getPath(startingPrime, finalPrime):
 
 def main():
         primes=str(sys.stdin.readline()).split()
-        print(getPath(primes[0],primes[1]))
+        if len(primes)==1:
+        	print(primes[0])
+        else:
+        	print(getPath(primes[0],primes[1]))
 
 if __name__ == '__main__' :
         main()
