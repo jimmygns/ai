@@ -72,7 +72,7 @@ def main():
     for line in sys.stdin:
         primes=str(line).split()
         if len(primes)==1:
-            print(primes[0])
+            print(primes[0]+'\n'+primes[0])
         elif len(primes)==2 and isPrime(primes[0]) and isPrime(primes[1]):
             print(getPath(primes[0],primes[1]))
         else:
