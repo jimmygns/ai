@@ -29,43 +29,37 @@ def getPossibleActions(currentPrime):
     return result
 
 def getPath(startingPrime, finalPrime):
-	if startingPrime==finalPrime:
-		return startingPrime
-	queueF = [(startingPrime,startingPrime)]
-	dicF = {startingPrime:startingPrime}
-	exploredF = Set()
-	queueB = [(finalPrime,finalPrime)]
-	dicB = {finalPrime:finalPrime}
-	exploredB = Set()
-	
-	
-
-	while queueF and queueB:
-		
-		(v,p) = queueF.pop(0)
-		
-		if v in exploredF:
-			continue
-		exploredF.add(v)
-		
-		for neighbor in getPossibleActions(v):
-			if neighbor in dicB.keys():
-				return p + ' ' + neighbor + '\n' + dicB[neighbor]
-			queueF.append((neighbor,p + ' ' + neighbor))
-			if neighbor not in dicF.keys():
-				dicF[neighbor]=p + ' ' + neighbor
-		
-		(vb,pb) = queueB.pop(0)
-		if vb in exploredB:
-			continue
-		exploredB.add(vb)
-		for neighbor in getPossibleActions(vb):
-			if neighbor in dicF.keys():
-				return  dicF[neighbor] +'\n'+pb+ ' '+neighbor 
-			queueB.append((neighbor,pb + ' ' + neighbor))
-			if neighbor not in dicB.keys():
-				dicB[neighbor]=pb + ' ' + neighbor
-	return 'UNSOLVABLE'
+    if startingPrime==finalPrime:
+        return startingPrime
+    queueF = [(startingPrime,startingPrime)]
+    dicF = {}
+    exploredF = Set()
+    queueB = [(finalPrime,finalPrime)]
+    dicB = {}
+    exploredB = Set()
+    while queueF and queueB:
+        
+        (v,p) = queueF.pop(0)
+        if v in exploredF:
+            continue
+        exploredF.add(v)
+        for neighbor in getPossibleActions(v):
+            if neighbor in dicB.keys():
+                return p + ' ' + neighbor + '\n' + dicB[neighbor]
+            queueF.append((neighbor,p + ' ' + neighbor))
+            if neighbor not in dicF.keys():
+                dicF[neighbor]=p + ' ' + neighbor
+        (vb,pb) = queueB.pop(0)
+        if vb in exploredB:
+            continue
+        exploredB.add(vb)
+        for neighbor in getPossibleActions(vb):
+            if neighbor in dicF.keys():
+                return  dicF[neighbor] +'\n'+pb+ ' '+neighbor
+            queueB.append((neighbor,pb + ' ' + neighbor))
+            if neighbor not in dicB.keys():
+                dicB[neighbor]=pb + ' ' + neighbor
+    return 'UNSOLVABLE'
 
 
 def main():
