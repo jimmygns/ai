@@ -51,8 +51,10 @@ def getPath(startingPrime, finalPrime,explored, depth):
 def main():
     for line in sys.stdin:
         primes=str(line).split()
-        print(getPath(primes[0],primes[1],{primes[0]},0))
-        print ('The script took {0} second !'.format(time.time() - startTime))
+        if len(primes) == 1:
+            print(primes[0])
+        else:
+            print(getPath(primes[0],primes[1],{primes[0]},0))
 
 
 if __name__ == '__main__' :

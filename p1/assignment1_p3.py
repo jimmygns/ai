@@ -63,8 +63,11 @@ def repeatDFS(startingPrime,finalPrime):
 def main():
     for line in sys.stdin:
         primes=str(line).split()
-        print (repeatDFS(primes[0],primes[1]))
-        print ('The script took {0} ms !'.format(time.time() - startTime))
+        if len(primes) ==1:
+            print(primes[0])
+        else:
+            print (repeatDFS(primes[0],primes[1]))
+        
 
 if __name__ == '__main__' :
     main()

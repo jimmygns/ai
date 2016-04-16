@@ -57,7 +57,6 @@ def main():
             print(getPath(primes[0],primes[1]))
         else:
             print("invalid input!")
-        print ('The script took {0} second !'.format(time.time() - startTime))
         explored.clear()
 
 if __name__ == '__main__' :
