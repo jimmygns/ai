@@ -30,7 +30,7 @@ def getPossibleActions(currentPrime):
 
 def getPath(startingPrime, finalPrime):
     if startingPrime==finalPrime:
-        return startingPrime
+        return startingPrime+'\n'+startingPrime
     queueF = [(startingPrime,startingPrime)]
     dicF = {}
     exploredF = Set()
