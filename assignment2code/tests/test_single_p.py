@@ -17,12 +17,20 @@ def run_code_from(python_file, input_text):
     player_class = next(getattr(module, name) for name in dir(module) if
                         inspect.isclass(getattr(module, name)) and issubclass(getattr(module, name), Player) and \
                         getattr(module, name) != Player)
-    players = Player.create_players([player_class, Player])  # Second player is a dummy
+
     init_txt, state_txt = input_text.strip().split("\n")
     eval(init_txt)
     state = eval(state_txt)
-    state.player = players[0]
-    return repr(players[0].move(state))
+
+    if state.player_row == 0:
+        players = Player.create_players(
+            [player_class, Player])  # Second player is a dummy
+    else:
+        players = Player.create_players(
+            [Player, player_class])  # First player is a dummy
+
+    state.player = players[state.player_row]
+    return repr(players[state.player_row].move(state))
 
 
 if __name__ == '__main__':
