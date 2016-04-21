@@ -13,29 +13,29 @@ class MinimaxPlayer(Player):
 
     def move(self, state):
         for new_action in state.actions():
-            if minimax(state.result(new_action)) == 1:
+            if self.minimax(state.result(new_action)) == 1:
                 return new_action
         for new_action in state.actions():
-            if minimax(state.result(new_action)) == 0:
+            if self.minimax(state.result(new_action)) == 0:
                 return new_action
         return state.actions()[0]
 
 
-    def minimax(self, state):
+    def minimax(self,state):
         
-        if state._is_terminal():
-            return state.untility()
-        if state.Player == Player:
+        if state.is_terminal():
+            return state.utility(self)
+        if state.player == self:
             value=-2
             for new_action in state.actions():
-                new_utility = minimax(state.result(new_action))
+                new_utility = self.minimax(state.result(new_action))
                 if new_utility > value:
                     value=new_utility
             return value
         else:
             value=2
             for new_action in state.actions():
-                new_utility = minimax(state.result(new_action))
+                new_utility = self.minimax(state.result(new_action))
                 if new_utility < value:
                     value=new_utility
             return value
