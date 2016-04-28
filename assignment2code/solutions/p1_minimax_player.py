@@ -22,7 +22,8 @@ class MinimaxPlayer(Player):
 
 
     def minimax(self,state):
-        
+        if state.ser() in self.cache:
+            return self.cache[state.ser()]
         if state.is_terminal():
             return state.utility(self)
         if state.player == self:
@@ -31,6 +32,7 @@ class MinimaxPlayer(Player):
                 new_utility = self.minimax(state.result(new_action))
                 if new_utility > value:
                     value=new_utility
+            self.cache[state.ser()]=value
             return value
         else:
             value=2
@@ -38,6 +40,7 @@ class MinimaxPlayer(Player):
                 new_utility = self.minimax(state.result(new_action))
                 if new_utility < value:
                     value=new_utility
+            self.cache[state.ser()]=value
             return value
 
 
