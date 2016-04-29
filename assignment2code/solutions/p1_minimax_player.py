@@ -12,6 +12,8 @@ class MinimaxPlayer(Player):
         self.cache ={}
 
     def move(self, state):
+        if len(state.actions()) == 0:
+                return None
         for new_action in state.actions():
             if self.minimax(state.result(new_action)) == 1:
                 return new_action
