@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-__author__ = 'Dan'
-__email__ = 'daz040@eng.ucsd.edu'
+__author__= 'Jinye Xu, Jiaying Hu, Zhongting Hu'
+__email__ ='jix029@ucsd.edu,A99076165,jih089@ucsd.edu,A99037641,z6hu@ucsd.edu,A99056145'
 
 from assignment2 import Player,State,Player,Action
 import Queue as Q
@@ -29,7 +29,7 @@ class PleasePleaseChangeThisToSomethingSomethingPlayer(Player):
         it won't work under time limit.
         """
         self.cache={}
-        self.MaxDepth=0
+        self.MaxDepth=10000
         self.best_utility=-2
         self.depth_limit=0
     
@@ -41,11 +41,10 @@ class PleasePleaseChangeThisToSomethingSomethingPlayer(Player):
         :return: Action, the next move
         """
         best_action=None
-        while len(state.actions())>0:
+        while len(state.actions())>0 and self.depth_limit<=self.MaxDepth:
             if self.is_time_up():
                 if self.hasZero(state,state.player_row):
                     best_action=self.heuristic(state,state.player_row)
-                    print 'timeup'
                 else:
                     value=-2
                     for new_action in state.actions():

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-__author__ = 'jinye xu,jiaying hu, zhongting hu'
-__email__ = 'daz040@eng.ucsd.edu'
-
+__author__= 'Jinye Xu, Jiaying Hu, Zhongting Hu'
+__email__ ='jix029@ucsd.edu,A99076165,jih089@ucsd.edu,A99037641,z6hu@ucsd.edu,A99056145'
 from assignment2 import Player, State, Action
 
 
