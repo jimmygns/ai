@@ -17,7 +17,7 @@ class Node:
         return self.value
     def __cmp__(self, other):
         return cmp(self.priority, other.priority)
-class PleasePleaseChangeThisToSomethingSomethingPlayer(Player):
+class CustomPlayer(Player):
     """The custom player implementation.
     """
 
@@ -40,8 +40,12 @@ class PleasePleaseChangeThisToSomethingSomethingPlayer(Player):
         :param state: State, the current state of the board.
         :return: Action, the next move
         """
+        self.depth_limit=0
         best_action=None
-        while len(state.actions())>0 and self.depth_limit<=self.MaxDepth:
+        #print "OK"
+        #print (len(state.actions()))
+        #print (self.depth_limit)
+        while len(state.actions())>0:
             if self.is_time_up():
                 if self.hasZero(state,state.player_row):
                     best_action=self.heuristic(state,state.player_row)

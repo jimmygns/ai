@@ -46,7 +46,7 @@ class AlphaBetaPlayer(Player):
             return value
         else:
             value=2
-            if len(state.actions())==0:
+            if len(statea!  actions())==0:
                 value = min(beta,self.alphabeta(state.result(None),alpha,beta))
                 beta = min(value,beta)               
             for new_action in state.actions():
