@@ -29,7 +29,7 @@ class PleasePleaseChangeThisToSomethingSomethingPlayer(Player):
         it won't work under time limit.
         """
         self.cache={}
-        self.MaxDepth=2*State.M+2
+        self.MaxDepth=0
         self.best_utility=-2
         self.depth_limit=0
     
@@ -42,9 +42,10 @@ class PleasePleaseChangeThisToSomethingSomethingPlayer(Player):
         """
         best_action=None
         while len(state.actions())>0:
-            if self.is_time_up() or self.depth_limit>=self.MaxDepth:
+            if self.is_time_up():
                 if self.hasZero(state,state.player_row):
                     best_action=self.heuristic(state,state.player_row)
+                    print 'timeup'
                 else:
                     value=-2
                     for new_action in state.actions():
@@ -52,7 +53,7 @@ class PleasePleaseChangeThisToSomethingSomethingPlayer(Player):
                             value=self.evaluate(state,state.player_row)
                             best_action=new_action
                 return best_action
-            else:
+            else: 
                 temp=self.best_utility
                 action=self.alpha_beta_search(state,0)
                 if self.best_utility>temp:
@@ -76,7 +77,7 @@ class PleasePleaseChangeThisToSomethingSomethingPlayer(Player):
         
         
     def MAX_value(self,state,alpha,beta,depth):
-        if depth>=self.depth_limit:
+        if depth>=self.depth_limit or self.is_time_up():
             value=self.evaluate(state,state.player_row)
             return value
         if state.ser() in self.cache:
@@ -103,7 +104,7 @@ class PleasePleaseChangeThisToSomethingSomethingPlayer(Player):
             
             
     def MIN_value(self,state,alpha,beta,depth):
-        if depth>=self.depth_limit:
+        if depth>=self.depth_limit or self.is_time_up():
             value=(-1)*self.evaluate(state,state.player_row)
             return value
         if state.ser() in self.cache:
@@ -169,9 +170,10 @@ class PleasePleaseChangeThisToSomethingSomethingPlayer(Player):
     def hasZero(self,state,my_row):
         for i in range(State.M):
             if my_row==0:
-                if state.board[State.M+1+i]==0:
+                if state.board[State.M+1+i]==0 and state.board[i]>0:
+                    
                     return True
             else:
-                if state.board[i]==0:
+                if state.board[i]==0 and state.board[State.M+1+i]>0:
                     return True
         return False
