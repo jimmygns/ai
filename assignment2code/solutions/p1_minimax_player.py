@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__author__ = 'Dan'
+__author__ = 'jinye xu,jiaying hu, zhongting hu'
 __email__ = 'daz040@eng.ucsd.edu'
 
 from assignment2 import Player, State, Action
@@ -14,36 +14,59 @@ class MinimaxPlayer(Player):
     def move(self, state):
         if len(state.actions()) == 0:
                 return None
+        best_action=None
+        value=-2
         for new_action in state.actions():
-            if self.minimax(state.result(new_action)) == 1:
-                return new_action
-        for new_action in state.actions():
-            if self.minimax(state.result(new_action)) == 0:
-                return new_action
-        return state.actions()[0]
+            new_value=self.mini_value(state.result(new_action))
+            if  new_value>value:
+                value=new_value
+                best_action=new_action
+        return best_action
 
 
-    def minimax(self,state):
-        if state.ser() in self.cache:
-            return self.cache[state.ser()]
+    def max_value(self,state):
         if state.is_terminal():
             return state.utility(self)
-        if state.player == self:
-            value=-2
-            for new_action in state.actions():
-                new_utility = self.minimax(state.result(new_action))
-                if new_utility > value:
-                    value=new_utility
-            self.cache[state.ser()]=value
-            return value
-        else:
-            value=2
-            for new_action in state.actions():
-                new_utility = self.minimax(state.result(new_action))
-                if new_utility < value:
-                    value=new_utility
-            self.cache[state.ser()]=value
-            return value
+        value=-2
+        if len(state.actions())==0:
+                 value= max(value,self.mini_value(state.result(None)))
+        for new_action in state.actions():
+            value = max(value,self.mini_value(state.result(new_action)))
+        return value
+
+    def mini_value(self,state):
+        if state.is_terminal():
+            return state.utility(self)
+        value=2
+        if len(state.actions())==0:
+                 value= min(value,self.max_value(state.result(None)))
+        for new_action in state.actions():
+            value = min(value,self.max_value(state.result(new_action)))
+        return value 
+
+
+
+    # def minimax(self,state):
+    #     #if state.ser() in self.cache:
+    #         #return self.cache[state.ser()]
+    #     if state.is_terminal():
+    #         return state.utility(self)
+    #     if state.player == self:
+    #         value=-2
+    #         for new_action in state.actions():
+    #             new_utility = self.minimax(state.result(new_action))
+    #             if new_utility > value:
+    #                 value=new_utility
+    #         #self.cache[state.ser()]=value
+    #         return value
+    #     else:
+    #         value=2
+    #         for new_action in state.actions():
+    #             new_utility = self.minimax(state.result(new_action))
+    #             if new_utility < value:
+    #                 value=new_utility
+    #         #self.cache[state.ser()]=value
+    #         return value
 
 
         """
