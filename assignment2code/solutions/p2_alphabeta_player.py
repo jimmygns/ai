@@ -103,7 +103,7 @@ class AlphaBetaPlayer(Player):
 
             value=2
             if len(state.actions())==0:
-                value= min(value,MIN_value(state.result(None),alpha,beta))
+                value= min(value,MAX_value(state.result(None),alpha,beta))
                 if value <= alpha:
                     return value
             for new_action in state.actions():
