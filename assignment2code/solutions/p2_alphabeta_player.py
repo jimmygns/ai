@@ -68,6 +68,8 @@ class AlphaBetaPlayer(Player):
     
         def alpha_beta_search(state):
              best_utility=-2
+             if len(state.actions()) == 0:
+                return None
              for new_action in state.actions():
                 current_utility = MIN_value(state.result(new_action), -2, 2)
                 if(current_utility>best_utility):
