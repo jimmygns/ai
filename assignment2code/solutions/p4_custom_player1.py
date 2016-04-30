@@ -17,7 +17,7 @@ class Node:
         return self.value
     def __cmp__(self, other):
         return cmp(self.priority, other.priority)
-class CustomPlayer(Player):
+class CustomPlayer1(Player):
     """The custom player implementation.
     """
 
@@ -29,7 +29,7 @@ class CustomPlayer(Player):
         it won't work under time limit.
         """
         self.cache={}
-        self.MaxDepth=30
+        self.MaxDepth=10
         self.best_utility=-2
         self.depth_limit=0
         self.terminal=True

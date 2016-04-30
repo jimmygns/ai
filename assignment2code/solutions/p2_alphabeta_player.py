@@ -78,8 +78,9 @@ class AlphaBetaPlayer(Player):
              return best_action
     
         def MAX_value(state,alpha,beta):
+            
             if state.ser() in self.cache:
-                return self.cache[state.ser()]
+                 return self.cache[state.ser()]
             if state.is_terminal():
                  return state.utility(self)
 
@@ -98,6 +99,7 @@ class AlphaBetaPlayer(Player):
             return value
         def MIN_value(state,alpha,beta):
             if state.ser() in self.cache:
+                
                 return self.cache[state.ser()]
             if state.is_terminal():
                 return state.utility(self)

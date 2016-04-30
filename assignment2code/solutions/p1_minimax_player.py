@@ -11,11 +11,12 @@ class MinimaxPlayer(Player):
         self.cache ={}
 
     def move(self, state):
-        if len(state.actions()) == 0:
+        possible_actions=state.actions()
+        if len(possible_actions) == 0:
                 return None
         best_action=None
         value=-2
-        for new_action in state.actions():
+        for new_action in possible_actions:
             new_value=self.mini_value(state.result(new_action))
             if  new_value>value:
                 value=new_value
@@ -27,9 +28,10 @@ class MinimaxPlayer(Player):
         if state.is_terminal():
             return state.utility(self)
         value=-2
-        if len(state.actions())==0:
+        possible_actions=state.actions()
+        if len(possible_actions)==0:
                  value= max(value,self.mini_value(state.result(None)))
-        for new_action in state.actions():
+        for new_action in possible_actions:
             value = max(value,self.mini_value(state.result(new_action)))
         return value
 
@@ -37,9 +39,10 @@ class MinimaxPlayer(Player):
         if state.is_terminal():
             return state.utility(self)
         value=2
-        if len(state.actions())==0:
+        possible_actions=state.actions()
+        if len(possible_actions)==0:
                  value= min(value,self.max_value(state.result(None)))
-        for new_action in state.actions():
+        for new_action in possible_actions:
             value = min(value,self.max_value(state.result(new_action)))
         return value 
 
