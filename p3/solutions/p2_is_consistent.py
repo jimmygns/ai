@@ -21,4 +21,4 @@ def is_consistent(csp, variable, value):
 
 
     # TODO implement this
-    pass
+    

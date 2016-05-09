@@ -15,18 +15,33 @@ def ac3(csp, arcs=None):
     This method returns True if the arc consistency check succeeds, and False otherwise."""
 
     queue_arcs = deque(arcs if arcs is not None else csp.constraints.arcs())
+    while (queue_arcs)>0:
+        (xi,xj)=queue_arcs.pop()
+        if revise(csp,xi,xj):
+            if len(xi.domain)==0:
+                return False
+            for (xi,xk) in csp.constraints[xi]:
+                if xk!=xj:
+                    queue_arcs.append((xi,xk));
 
+    return True
     # TODO implement this
 
 
 def revise(csp, xi, xj):
     # You may additionally want to implement the 'revise' method.
-    revised=false
-    notsatisfied=false
+    revised=False
+    satisfied=False
     for vi in xi.domain:
+        satisfied=False
         for vj in xj.domain:
             for constraint in csp.constraints[xi,xj]:
-                if is_satisfied(vi,vj)==False:
-                    notsatisfied=True
+                if constraint.is_satisfied(vi,vj)==True:
+                    satisfied=True
                     break
-            if(notsatisfied)
+            if satisfied:
+                break
+        if satisfied==False:
+            xi.domain.remove(vi)
+            revised=True
+    return revised
