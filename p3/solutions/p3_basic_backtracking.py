@@ -8,6 +8,7 @@ def select_unassigned_variable(csp):
 
     For P3, *you do not need to modify this method.*
     """
+    
     return next((variable for variable in csp.variables if not variable.is_assigned()))
 
 
@@ -48,7 +49,21 @@ def backtrack(csp):
     """
 
     # TODO implement this
-    pass
+    if is_complete(csp)==True:
+        return True
+    unassigned=select_unassigned_variable(csp);
+    for i in order_domain_values(csp,unassigned):
+        if is_consistent(csp, unassigned, i)==True:
+            csp.variables.begin_transaction()
+            unassigned.assign(i)
+            csp.assignment[unassigned]=i
+            if backtrack(csp)==True:
+                return True
+            else:
+                csp.variables.rollback()
+    return False
+
+
 
 
 

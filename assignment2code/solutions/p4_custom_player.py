@@ -29,7 +29,7 @@ class CustomPlayer(Player):
         it won't work under time limit.
         """
         self.cache={}
-        self.MaxDepth=30
+        self.MaxDepth=15
         self.best_utility=-2
         self.depth_limit=0
         self.terminal=True
@@ -44,7 +44,7 @@ class CustomPlayer(Player):
         self.depth_limit=1
         self.best_utility=-2
         action=None
-        while not self.is_time_up() and self.depth_limit<=self.MaxDepth :
+        while not self.is_time_up():
             self.terminal=True
             self.cache={}
             action=self.alpha_beta_search(state,0)
