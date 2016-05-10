@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import operator
 def select_unassigned_variable(csp):
     """Selects the next unassigned variable, or None if there is no more unassigned variables
     (i.e. the assignment is complete).
@@ -11,9 +11,18 @@ def select_unassigned_variable(csp):
     """
 
     # TODO implement this
-    pass
-
-
+    min=float("infinity")
+    minVar=csp.variables[0]
+    for variable in csp.variables:
+        if variable.is_assigned()==False:
+            count=len(variable.domain)
+        if count<min:
+            min=count
+            minVar=variable
+        if count==min:
+            if len(csp.constraints[variable])>flen(csp.constraints[minVar]):
+                minVar=variable
+    return minVar
 
 def order_domain_values(csp, variable):
     """Returns a list of (ordered) domain values for the given variable.
@@ -24,4 +33,17 @@ def order_domain_values(csp, variable):
     """
 
     # TODO implement this
-    pass
+    list=[]
+    for x in variable.domain:
+        num=0
+        for neighbor in csp.constraints[variable]:
+            for neighbourVar in neighbor.var2.domain:
+                if neighbor.is_satisfied(x,neighbourVar):
+                    num=num+1
+        list.append((x,num))
+    list=sorted(list,key=operator.itemgetter(1),reverse=True)
+    newList=[]
+    for value in list:
+        newList.append(value[0])
+    return newList
+
