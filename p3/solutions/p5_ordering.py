@@ -13,20 +13,19 @@ def select_unassigned_variable(csp):
     # TODO implement this
     min=float("infinity")
     
-    count=0
     for variable in csp.variables:
         if variable.is_assigned()==False:
             count=len(variable.domain)
             if count==min:
                 num1=0
                 num2=0
-                for num in csp.constraints[variable]:
-                    if num.var1==variable and num.var2==False:
+                for num in csp.constraints:
+                    if num.var1==variable and num.var2==False or num.var1==False and num.var2==variable:
                         num1=num1+1
-                for num in csp.constraints[minVar]:
-                    if num.var1==minVar and num.var2==False:
+                for num in csp.constraints:
+                    if num.var1==minVar and num.var2==False or num.var1==False and num.var2==minVar:
                         num2=num2+1
-                if num1>num2:
+                if num1>=num2:
                     minVar=variable
             elif count<min:
                 min=count
