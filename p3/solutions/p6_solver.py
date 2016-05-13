@@ -42,10 +42,12 @@ def backtrack(csp):
           
             csp.assignment[unassigned]=i
             unassigned.assign(i)
-            if backtrack(csp):
-                return True
-            else:
-                csp.variables.rollback()
+            if inference(csp,unassigned):
+                if backtrack(csp):
+                    return True
+            # if backtrack(csp):
+            #     return True
+            csp.variables.rollback()
     return False
 
 
