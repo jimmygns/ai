@@ -150,7 +150,7 @@ def select_unassigned_variable(csp):
                 for num in csp.constraints[minVar]:
                     if num.var1==minVar and num.var2==False:
                         num2=num2+1
-                if num1>num2:
+                if num1>=num2:
                     minVar=variable
             elif count<min:
                 min=count
