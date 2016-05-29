@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 """ generated source for module BayesianNetwork """
 from Assignment4 import *
+import Queue
+import random
 # 
 #  * A bayesian network
 #  * @author Panqu
@@ -81,8 +83,52 @@ class BayesianNetwork(object):
     def performRejectionSampling(self, queryVar, givenVars, numSamples):
         """ generated source for method performRejectionSampling """
         #  TODO
-        return 0
+        samplesNum=0
+        expectedNum=0
+        for i in range(numSamples):
+            x=self.priorsampling()
 
+            flag=True
+            for key in givenVars.keys():
+                if givenVars[key]!=x.assignments[key]:
+                    flag=False
+            if flag==True:
+                samplesNum=samplesNum+1
+                if x.assignments[queryVar]==True:
+                    expectedNum=expectedNum+1
+    
+        num=(float)(expectedNum/float(samplesNum))
+
+   
+        return num
+    def priorsampling(self):
+        q = Queue.Queue()
+        
+        for i in self.rootNodes:
+            q.put(i)
+        sample=Sample()
+        while not q.empty():
+            node=q.get()
+            r=random.uniform(0,1)
+            
+            p=node.getProbability(sample.assignments,True)
+            
+            if r>p:
+                sample.setAssignment(node.getVariable(),False)
+            else:
+                sample.setAssignment(node.getVariable(),True)
+            children=node.getChildren()
+            for child in children:
+                q.put(child)
+        return sample
+
+
+
+
+    
+    
+
+    
     # 
     #     * Returns an estimate of P(queryVal=true|givenVars) using weighted sampling
     #     * @param queryVar Query variable in probability query
