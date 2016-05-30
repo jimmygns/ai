@@ -138,7 +138,51 @@ class BayesianNetwork(object):
     def performWeightedSampling(self, queryVar, givenVars, numSamples):
         """ generated source for method performWeightedSampling """
         #  TODO
+        sampleWeight=0
+        resultWeight=0
+        for i in range(numSamples):
+            x=self.priorsampling_weighted(givenVars)
+
+            if x.assignments[queryVar]==True:
+                resultWeight=resultWeight+x.getWeight()
+            sampleWeight=sampleWeight+x.getWeight()
+    
+        num=(float)(resultWeight/float(sampleWeight))
+
+   
+        return num
+
+
+
+
         return 0
+
+    def priorsampling_weighted(self, givenVars):
+        q = Queue.Queue()
+        
+        for i in self.rootNodes:
+            q.put(i)
+        sample=Sample()
+        while not q.empty():
+            node=q.get()
+            var=node.getVariable()
+            if var in givenVars.keys():
+                p=node.getProbability(sample.assignments,givenVars[var])
+                sample.setAssignment(var,givenVars[var])
+                sample.setWeight(sample.getWeight()*p)
+            else:
+                r=random.uniform(0,1)            
+                p=node.getProbability(sample.assignments,True)
+                
+                if r>p:
+                    sample.setAssignment(node.getVariable(),False)
+                else:
+                    sample.setAssignment(node.getVariable(),True)
+            children=node.getChildren()
+            for child in children:
+                q.put(child)
+
+        return sample
 
     # 
     #     * Returns an estimate of P(queryVal=true|givenVars) using Gibbs sampling
