@@ -194,5 +194,47 @@ class BayesianNetwork(object):
     def performGibbsSampling(self, queryVar, givenVars, numTrials):
         """ generated source for method performGibbsSampling """
         #  TODO
-        return 0
+        resultSample=0
+        for i in range(numTrials): 
+            sample=Sample()
+
+            for key in self.varMap.keys():
+                if key in givenVars.keys():
+                    sample.setAssignment(key,givenVars[key])
+                else:
+                    sample.setAssignment(key,bool(random.getrandbits(1)))
+
+            self.resample(sample, queryVar)
+            if sample.assignments[queryVar]==True:
+                resultSample=resultSample+1
+
+        
+        num=(float)(resultSample/float(numTrials))
+        return num
+
+
+
+    def resample(self,sample,queryVar):
+        node=self.varMap[queryVar]
+        del sample.assignments[queryVar]
+        p1=node.getProbability(sample.assignments,True)
+        p2=node.getProbability(sample.assignments,False)+p1
+        p=p1/p2
+        r=random.uniform(0,1)
+        if r>p:
+            sample.setAssignment(queryVar,False)
+        else:
+            sample.setAssignment(queryVar,True)
+
+
+
+
+
+
+
+
+
+
+
+
 
