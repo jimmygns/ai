@@ -83,7 +83,7 @@ class BayesianNetwork(object):
     def performRejectionSampling(self, queryVar, givenVars, numSamples):
         """ generated source for method performRejectionSampling """
         #  TODO
-        samplesNum=0
+        """ samplesNum=0
         expectedNum=0
         for i in range(numSamples):
             x=self.priorsampling()
@@ -112,7 +112,6 @@ class BayesianNetwork(object):
             r=random.uniform(0,1)
             
             p=node.getProbability(sample.assignments,True)
-            
             if r>p:
                 sample.setAssignment(node.getVariable(),False)
             else:
@@ -120,8 +119,7 @@ class BayesianNetwork(object):
             children=node.getChildren()
             for child in children:
                 q.put(child)
-        return sample
-
+        return sample """
 
 
 
@@ -138,24 +136,23 @@ class BayesianNetwork(object):
     def performWeightedSampling(self, queryVar, givenVars, numSamples):
         """ generated source for method performWeightedSampling """
         #  TODO
-        sampleWeight=0
-        resultWeight=0
+        #sampleWeight=0
+        resultWeight={}
+        resultWeight["True"]=0
+        resultWeight["False"]=0
         for i in range(numSamples):
             x=self.priorsampling_weighted(givenVars)
-
-            if x.assignments[queryVar]==True:
-                resultWeight=resultWeight+x.getWeight()
-            sampleWeight=sampleWeight+x.getWeight()
+            if x.assignments[queryVar.getName()]==True:
+                resultWeight["True"]=resultWeight["True"]+x.getWeight()
+            else:
+                resultWeight["False"]=resultWeight["False"]+x.getWeight()
+          #  sampleWeight=sampleWeight+x.getWeight()
     
-        num=(float)(resultWeight/float(sampleWeight))
+        #num=(float)(resultWeight/float(sampleWeight))
 
-   
-        return num
-
-
-
-
-        return 0
+        print resultWeight["True"]
+        print (resultWeight["True"]+resultWeight["False"])
+        return (float)(resultWeight["True"])/(float)(resultWeight["True"]+resultWeight["False"])
 
     def priorsampling_weighted(self, givenVars):
         q = Queue.Queue()
@@ -168,16 +165,16 @@ class BayesianNetwork(object):
             var=node.getVariable()
             if var in givenVars.keys():
                 p=node.getProbability(sample.assignments,givenVars[var])
-                sample.setAssignment(var,givenVars[var])
+                sample.setAssignment(var.getName(),givenVars[var])
                 sample.setWeight(sample.getWeight()*p)
             else:
                 r=random.uniform(0,1)            
                 p=node.getProbability(sample.assignments,True)
                 
                 if r>p:
-                    sample.setAssignment(node.getVariable(),False)
+                    sample.setAssignment(node.getVariable().getName(),False)
                 else:
-                    sample.setAssignment(node.getVariable(),True)
+                    sample.setAssignment(node.getVariable().getName(),True)
             children=node.getChildren()
             for child in children:
                 q.put(child)
@@ -194,16 +191,19 @@ class BayesianNetwork(object):
     def performGibbsSampling(self, queryVar, givenVars, numTrials):
         """ generated source for method performGibbsSampling """
         #  TODO
-        resultSample=0
-        for i in range(numTrials): 
+        """resultSample=0
+        var=[]
+        for key in self.varMap.keys():
             sample=Sample()
+            if key in givenVars.keys():
+                sample.setAssignment(key,givenVars[key])
+            else:
+                var.append(sample)
+                sample.setAssignment(key,bool(random.getrandbits(1)))
 
-            for key in self.varMap.keys():
-                if key in givenVars.keys():
-                    sample.setAssignment(key,givenVars[key])
-                else:
-                    sample.setAssignment(key,bool(random.getrandbits(1)))
-
+        for i in range(numTrials): 
+            node=var.pop(0)
+            num=
             self.resample(sample, queryVar)
             if sample.assignments[queryVar]==True:
                 resultSample=resultSample+1
@@ -224,7 +224,7 @@ class BayesianNetwork(object):
         if r>p:
             sample.setAssignment(queryVar,False)
         else:
-            sample.setAssignment(queryVar,True)
+            sample.setAssignment(queryVar,True)"""
 
 
 

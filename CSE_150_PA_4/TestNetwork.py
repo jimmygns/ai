@@ -46,7 +46,7 @@ class TestNetwork(object):
         given1[burglary]= False
         given1[earthquake]=True
         print("rejection sampling: " +str(alarmnet.performRejectionSampling(john, given1, 999999)))
-        print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 99999)))
+        #print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 99999)))
         print("gibbs sampling: " + str(alarmnet.performGibbsSampling(john, given1, 99999)))
         #  P(B=1|J=1) = TODO in writeup
         print("Test 2")
