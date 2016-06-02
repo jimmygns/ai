@@ -211,7 +211,7 @@ class BayesianNetwork(object):
                 sample.setAssignment(key,a)
                 
         for i in range(numTrials): 
-           for ne in non_evidence:
+            for ne in non_evidence:
                 self.resample(sample, ne)
                 if sample.assignments[queryVar]==True:
                     Normal["True"]=Normal["True"]+1
@@ -226,12 +226,28 @@ class BayesianNetwork(object):
         node=self.varMap[var]
         
         p1=node.getProbability(sample.assignments,True)
-        p2=node.getProbability(sample.assignments,False)+p1
-        p=p1/p2
+        p2=node.getProbability(sample.assignments,False)
+        p=1
+        px=1
+        if sample.assignments[var]==True:
+            p=p1
+            px=p2
+        else:
+            p=p2
+            px=p1
         for child in node.getChildren():
             p3=child.getProbability(sample.assignments,sample.assignments[child.getVariable()])
-            #p4=child.getProbability(sample.assignments,not sample.assignments[child.getVariable()])
             p=p*p3
+            
+        sample.setAssignment(node.getVariable(),not sample.assignments[var])   
+        for child in node.getChildren():
+            p4=child.getProbability(sample.assignments,sample.assignments[child.getVariable()])
+            px=px*p4
+        sample.setAssignment(node.getVariable(),not sample.assignments[var])
+        if sample.assignments[var]==True:
+            p=p/(p+px)
+        else:
+            p=px/(float)(p+px)
         r=random.uniform(0,1)
         if r>p:
             sample.setAssignment(var,False)
