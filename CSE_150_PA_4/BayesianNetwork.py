@@ -83,7 +83,7 @@ class BayesianNetwork(object):
     def performRejectionSampling(self, queryVar, givenVars, numSamples):
         """ generated source for method performRejectionSampling """
         #  TODO
-        """ samplesNum=0
+        samplesNum=0
         expectedNum=0
         for i in range(numSamples):
             x=self.priorsampling()
@@ -119,7 +119,7 @@ class BayesianNetwork(object):
             children=node.getChildren()
             for child in children:
                 q.put(child)
-        return sample """
+        return sample 
 
 
 
@@ -191,40 +191,47 @@ class BayesianNetwork(object):
     def performGibbsSampling(self, queryVar, givenVars, numTrials):
         """ generated source for method performGibbsSampling """
         #  TODO
-        """resultSample=0
+        
         var=[]
-        for key in self.varMap.keys():
-            sample=Sample()
+        non_evidence=[]
+        Normal={}
+        Normal["True"]=0
+        Normal["False"]=0
+        sample=Sample()
+        for key in self.varMap.keys(): 
             if key in givenVars.keys():
                 sample.setAssignment(key,givenVars[key])
             else:
+                non_evidence.append(key)
                 var.append(sample)
                 sample.setAssignment(key,bool(random.getrandbits(1)))
 
         for i in range(numTrials): 
-            node=var.pop(0)
-            num=
-            self.resample(sample, queryVar)
-            if sample.assignments[queryVar]==True:
-                resultSample=resultSample+1
-
+            for ne in non_evidence:
+                self.resample(sample,ne)
+                if sample.assignments[queryVar]==True:
+                    Normal["True"]=Normal["True"]+1
+                else:
+                    Normal["False"]=Normal["False"]+1
         
-        num=(float)(resultSample/float(numTrials))
+        num=(float)(Normal["True"]/float(Normal["True"]+Normal["False"]))
         return num
 
 
 
-    def resample(self,sample,queryVar):
-        node=self.varMap[queryVar]
-        del sample.assignments[queryVar]
+    def resample(self,sample,var):
+        node=self.varMap[var]
+        
         p1=node.getProbability(sample.assignments,True)
         p2=node.getProbability(sample.assignments,False)+p1
         p=p1/p2
+        for child in node.getChildren():
+            p=p*child.getProbability(sample.assignments,sample.assignments[child.getVariable()])
         r=random.uniform(0,1)
         if r>p:
-            sample.setAssignment(queryVar,False)
+            sample.setAssignment(var,False)
         else:
-            sample.setAssignment(queryVar,True)"""
+            sample.setAssignment(var,True)
 
 
 
