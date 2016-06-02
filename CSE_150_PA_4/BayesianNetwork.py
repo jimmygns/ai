@@ -85,8 +85,19 @@ class BayesianNetwork(object):
         #  TODO
         samplesNum=0
         expectedNum=0
+        list=[]
+        q = Queue.Queue()
+        for i in self.rootNodes:
+            q.put(i)
+        while not q.empty():
+            node=q.get()
+            if not node in list:
+                list.append(node)
+            children=node.getChildren()
+            for child in children:
+                q.put(child)
         for i in range(numSamples):
-            x=self.priorsampling()
+            x=self.priorsampling(list)
 
             flag=True
             for key in givenVars.keys():
@@ -101,14 +112,13 @@ class BayesianNetwork(object):
 
    
         return num
-    def priorsampling(self):
+    def priorsampling(self,list):
         q = Queue.Queue()
         
         for i in self.rootNodes:
             q.put(i)
         sample=Sample()
-        while not q.empty():
-            node=q.get()
+        for node in list:
             r=random.uniform(0,1)
             
             p=node.getProbability(sample.assignments,True)
@@ -116,9 +126,6 @@ class BayesianNetwork(object):
                 sample.setAssignment(node.getVariable(),False)
             else:
                 sample.setAssignment(node.getVariable(),True)
-            children=node.getChildren()
-            for child in children:
-                q.put(child)
         return sample 
 
 
@@ -136,7 +143,6 @@ class BayesianNetwork(object):
     def performWeightedSampling(self, queryVar, givenVars, numSamples):
         """ generated source for method performWeightedSampling """
         #  TODO
-        #sampleWeight=0
         resultWeight={}
         resultWeight["True"]=0
         resultWeight["False"]=0
@@ -158,12 +164,6 @@ class BayesianNetwork(object):
                 resultWeight["True"]=resultWeight["True"]+x.getWeight()
             else:
                 resultWeight["False"]=resultWeight["False"]+x.getWeight()
-          #  sampleWeight=sampleWeight+x.getWeight()
-    
-        #num=(float)(resultWeight/float(sampleWeight))
-
-        print resultWeight["True"]
-        print (resultWeight["True"]+resultWeight["False"])
         return (float)(resultWeight["True"])/(float)(resultWeight["True"]+resultWeight["False"])
 
     def priorsampling_weighted(self, givenVars,list):
@@ -203,21 +203,20 @@ class BayesianNetwork(object):
         Normal["False"]=0
         sample=Sample()
         for key in self.varMap.keys(): 
-            if key in givenVars.keys():
+            if key in givenVars:
                 sample.setAssignment(key,givenVars[key])
             else:
                 non_evidence.append(key)
                 a=bool(random.getrandbits(1))
                 sample.setAssignment(key,a)
-                print a
+                
         for i in range(numTrials): 
-            for ne in non_evidence:
-                self.resample(sample,ne)
+           for ne in non_evidence:
+                self.resample(sample, ne)
                 if sample.assignments[queryVar]==True:
                     Normal["True"]=Normal["True"]+1
                 else:
                     Normal["False"]=Normal["False"]+1
-        
         num=(float)(Normal["True"]/float(Normal["True"]+Normal["False"]))
         return num
 
