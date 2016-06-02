@@ -45,20 +45,19 @@ class TestNetwork(object):
         given1 = {}
         given1[burglary]= False
         given1[earthquake]=True
-        print("rejection sampling: " +str(alarmnet.performRejectionSampling(john, given1, 999999)))
+        #print("rejection sampling: " +str(alarmnet.performRejectionSampling(john, given1, 999999)))
         #print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 99999)))
         print("gibbs sampling: " + str(alarmnet.performGibbsSampling(john, given1, 99999)))
         #  P(B=1|J=1) = TODO in writeup
         print("Test 2")
         given2 = {}
         given2[john]=True
-        print("rejection sampling: " + str(alarmnet.performRejectionSampling(burglary, given2, 999999)))
-        print("weighted sampling: " + str(alarmnet.performWeightedSampling(burglary, given2, 99999)))
+        #print("rejection sampling: " + str(alarmnet.performRejectionSampling(burglary, given2, 999999)))
+        #print("weighted sampling: " + str(alarmnet.performWeightedSampling(burglary, given2, 99999)))
         print("gibbs sampling: " + str(alarmnet.performGibbsSampling(burglary, given2, 99999)))
 
 
 if __name__ == '__main__':
     import sys
     TestNetwork.main(sys.argv)
-import sys
-TestNetwork.main(sys.argv)
+
