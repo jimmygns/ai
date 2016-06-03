@@ -245,9 +245,15 @@ class BayesianNetwork(object):
             px=px*p4
         sample.setAssignment(node.getVariable(),not sample.assignments[var])
         if sample.assignments[var]==True:
-            p=(float)(p/(p+px))
+            if p==0:
+                p=0
+            else:
+                p=(float)(p/(p+px))
         else:
-             p=(float)(px/(p+px))
+            if px==0:
+                p=0
+            else:
+                p=(float)(px/(p+px))
         r=random.uniform(0,1)
         if r>p:
             sample.setAssignment(var,False)
