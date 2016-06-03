@@ -217,7 +217,7 @@ class BayesianNetwork(object):
                     Normal["True"]=Normal["True"]+1
                 else:
                     Normal["False"]=Normal["False"]+1
-        num=(float)(Normal["True"]/float(Normal["True"]+Normal["False"]))
+        num=(float)(Normal["True"])/(float)(Normal["True"]+Normal["False"])
         return num
 
 
@@ -227,8 +227,8 @@ class BayesianNetwork(object):
         
         p1=node.getProbability(sample.assignments,True)
         p2=node.getProbability(sample.assignments,False)
-        p=1
-        px=1
+        p=1.0
+        px=1.0
         if sample.assignments[var]==True:
             p=p1
             px=p2
@@ -245,9 +245,9 @@ class BayesianNetwork(object):
             px=px*p4
         sample.setAssignment(node.getVariable(),not sample.assignments[var])
         if sample.assignments[var]==True:
-            p=p/(float)(p+px)
+            p=(float)(p/(p+px))
         else:
-            p=px/(float)(p+px)
+             p=(float)(px/(p+px))
         r=random.uniform(0,1)
         if r>p:
             sample.setAssignment(var,False)

@@ -82,29 +82,29 @@ class TestNetwork(object):
         given1[burglary]= False
         given1[earthquake]=True
         print('alarm')
-        print("rejection sampling: " +str(alarmnet.performRejectionSampling(john, given1, 999999)))
-        print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 99999)))
-        print("gibbs sampling: " + str(alarmnet.performGibbsSampling(john, given1, 99999)))
+        #print("rejection sampling: " +str(alarmnet.performRejectionSampling(john, given1, 400000)))
+        #print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 1250000)))
+        #print("gibbs sampling: " + str(alarmnet.performGibbsSampling(john, given1, 1250000)))
         given3={}
         given3[brokeLaw]=True
         given3[motivatedProsecuter]=False
         print('guilty')
-        print("rejection sampling: " +str(guiltynet.performRejectionSampling(jailed, given3, 999999)))
-        print("weighted sampling: " + str(guiltynet.performWeightedSampling(jailed, given3, 99999)))
-        print("gibbs sampling: " + str(guiltynet.performGibbsSampling(jailed, given3, 99999)))
-        #  P(B=1|J=1) = TODO in writeup
+        #print("rejection sampling: " +str(guiltynet.performRejectionSampling(jailed, given3, 999999)))
+        #print("weighted sampling: " + str(guiltynet.performWeightedSampling(jailed, given3, 99999)))
+        #print("gibbs sampling: " + str(guiltynet.performGibbsSampling(jailed, given3, 99999)))
+        # P(B=1|J=1) = TODO in writeup
         print("Test 2")
         given2 = {}
         given4={}
         given2[john]=True
         given4[jailed]=True
-        print("rejection sampling: " + str(alarmnet.performRejectionSampling(burglary, given2, 999999)))
-        print("weighted sampling: " + str(alarmnet.performWeightedSampling(burglary, given2, 99999)))
-        print("gibbs sampling: " + str(alarmnet.performGibbsSampling(burglary, given2, 99999)))
-        print('guilty')
-        print("rejection sampling: " +str(guiltynet.performRejectionSampling(motivatedProsecuter, given4, 999999)))
-        print("weighted sampling: " + str(guiltynet.performWeightedSampling(motivatedProsecuter, given4, 99999)))
-        print("gibbs sampling: " + str(guiltynet.performGibbsSampling(motivatedProsecuter, given4, 99999)))
+        #print("rejection sampling: " + str(alarmnet.performRejectionSampling(burglary, given2, 999999)))
+        #print("weighted sampling: " + str(alarmnet.performWeightedSampling(burglary, given2, 1250000)))
+        print("gibbs sampling: " + str(alarmnet.performGibbsSampling(burglary, given2, 1250000)))
+        #print('guilty')
+        #print("rejection sampling: " +str(guiltynet.performRejectionSampling(motivatedProsecuter, given4, 999999)))
+        #print("weighted sampling: " + str(guiltynet.performWeightedSampling(motivatedProsecuter, given4, 99999)))
+        #print("gibbs sampling: " + str(guiltynet.performGibbsSampling(motivatedProsecuter, given4, 99999)))
 
 if __name__ == '__main__':
     import sys
